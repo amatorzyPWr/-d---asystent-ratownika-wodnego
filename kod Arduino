@@ -1,0 +1,25 @@
+int rc_pulse3, motor_pwm5, motor_pwm6;
+
+void setup() {
+  pinMode(3, INPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  digitalWrite(5, LOW);
+  digitalWrite(6, LOW);
+}
+
+void loop() {
+  motor_pwm5 = 0;
+  motor_pwm6 = 0;
+  delay(250);
+  rc_pulse3 = pulseIn(3, HIGH, 25000);
+  delay(250);
+  if (rc_pulse3 > 1000) {
+    motor_pwm5 = map(rc_pulse3, 1000, 2000, 0, 255);
+    motor_pwm6 = map(rc_pulse3, 1000, 2000, 0, 255);
+    if (motor_pwm5 >= 0)
+      analogWrite(5, motor_pwm5);
+      analogWrite(6, motor_pwm6);
+  }
+  delay(250);
+}
